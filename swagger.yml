@@ -1,0 +1,139 @@
+swagger: "2.0"
+info:
+  title: Custom API Plugin for React
+  description: API endpoints for interacting with posts
+  version: "1.0.0"
+paths:
+  /wp-json/react/v1/posts:
+    get:
+      summary: Get all posts
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Post"
+    post:
+      summary: Create a new post
+      parameters:
+        - name: post
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/NewPost"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Post"
+  /wp-json/react/v1/posts/{id}:
+    get:
+      summary: Get a post by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the post to retrieve
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Post"
+    put:
+      summary: Update a post by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the post to update
+          required: true
+          type: integer
+        - name: post
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/UpdatePost"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Post"
+    delete:
+      summary: Delete a post by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the post to delete
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+definitions:
+  Post:
+    type: object
+    properties:
+      id:
+        type: integer
+      slug:
+        type: string
+      link:
+        type: string
+      title:
+        type: string
+      featured_image:
+        type: string
+      categories:
+        type: array
+        items:
+          $ref: "#/definitions/Category"
+      content:
+        type: string
+      meta_fields:
+        type: array
+        items:
+          $ref: "#/definitions/MetaField"
+  Category:
+    type: object
+    properties:
+      id:
+        type: integer
+      title:
+        type: string
+      description:
+        type: string
+  MetaField:
+    type: object
+    properties:
+      key:
+        type: string
+      value:
+        type: string
+  NewPost:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      meta_fields:
+        type: array
+        items:
+          $ref: "#/definitions/MetaField"
+  UpdatePost:
+    type: object
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      meta_fields:
+        type: array
+        items:
+          $ref: "#/definitions/MetaField"
