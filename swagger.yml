@@ -27,6 +27,8 @@ paths:
           description: Successful operation
           schema:
             $ref: "#/definitions/Post"
+      security:
+        - TokenHeader: []
   /wp-json/react/v1/posts/{id}:
     get:
       summary: Get a post by ID
@@ -55,10 +57,12 @@ paths:
           schema:
             $ref: "#/definitions/UpdatePost"
       responses:
-        200:
-          description: Successful operation
-          schema:
-            $ref: "#/definitions/Post"
+         200:
+           description: Successful operation
+           schema:
+             $ref: "#/definitions/Post"
+      security:
+        - TokenHeader: []
     delete:
       summary: Delete a post by ID
       parameters:
@@ -75,6 +79,14 @@ paths:
             properties:
               message:
                 type: string
+      security:
+        - TokenHeader: []
+securityDefinitions:
+  TokenHeader:
+    type: apiKey
+    name: Authorization
+    in: header
+
 definitions:
   Post:
     type: object
